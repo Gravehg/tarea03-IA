@@ -77,6 +77,7 @@ class AutoEncoder(L.LightningModule):
 
         plt.show()
 
+    #Test
     def test_step(self, val_batch, batch_idx):
         x, y = val_batch
         x = x.view(x.size(0), -1)
