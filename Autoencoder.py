@@ -67,12 +67,12 @@ class AutoEncoder(L.LightningModule):
         self.original_images = []
 
     def plot_reconstructed_images(self, original_images, reconstructed_images):
-        num_images = 10
+        num_images = min(original_images.size(0), 10)
         fig, axes = plt.subplots(2, num_images, figsize=(15, 4))
         for i in range(num_images):
-            axes[0, i].imshow(original_images[i].reshape(28, 28), cmap="gray")
+            axes[0, i].imshow(original_images[i].cpu().float().numpy().reshape(28, 28), cmap="gray")
             axes[0, i].axis("off")
-            axes[1, i].imshow(reconstructed_images[i].reshape(28, 28), cmap="gray")
+            axes[1, i].imshow(reconstructed_images[i].cpu().float().numpy().reshape(28, 28), cmap="gray")
             axes[1, i].axis("off")
 
         plt.show()
@@ -86,15 +86,3 @@ class AutoEncoder(L.LightningModule):
         loss = F.mse_loss(x_hat, x)
         self.log("test_loss", loss)
         return loss
-
-
-    def plot_reconstructed_images(self):
-        num_images = 10
-        fig, axes = plt.subplots(2, num_images, figsize=(15,4))
-        for i in range(num_images):
-            axes[0,i].imshow(self.original_images[i].reshape(28,28), cmap="gray")
-            axes[0,i].axis("off")
-            axes[1,i].imshow(self.reconstructed_images[i].resize(28,28), cmap="gray")
-            axes[1,i].axis("off")
-
-        plt.show()
