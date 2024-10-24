@@ -28,7 +28,7 @@ class AutoEncoder(L.LightningModule):
         return embedding
     
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters, lr=self.lr)
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
         return optimizer
     
     def training_step(self, train_batch, batch_idx):
@@ -81,5 +81,3 @@ class AutoEncoder(L.LightningModule):
             axes[1,i].axis("off")
 
         plt.show()
-
-
